@@ -1,0 +1,1 @@
+1. Just change the file conn.php in config folder as your local setting
