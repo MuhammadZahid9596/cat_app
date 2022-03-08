@@ -4,17 +4,18 @@ include '../config/conn.php';
 
 $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL,"https://api.thecatapi.com/v1/images/search?limit=10&size=".$_POST['size']);
+curl_setopt($ch, CURLOPT_URL,"https://api.thecatapi.com/v1/favourites");
 // Receive server response ...
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-header('x-api-key: 8175f91c-3fcc-44ee-83f9-a4d66ff8b331');
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('x-api-key: 8175f91c-3fcc-44ee-83f9-a4d66ff8b331'));
 
 $server_output = curl_exec($ch);
 
 curl_close ($ch);
 
 $result = json_decode($server_output,true);
+// var_dump($result);
 ?>
 <body>
     <div class="container">
@@ -38,10 +39,10 @@ $result = json_decode($server_output,true);
             <tr>
                 <th>Sno</th>
                 <th>Id</th>
-                <th>URL</th>
-                <th>Width</th>
-                <th>Height</th>
-                <th>Actions (Delete Fav from fav list)</th>
+                <th>User Id</th>
+                <th>Image Id</th>
+                <th>Created At</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -51,10 +52,10 @@ $result = json_decode($server_output,true);
                         echo '<tr>';
                         echo '<td>'.$count.'</td>';
                         echo '<td>'.$val['id'].'</td>';
-                        echo '<td>'.$val['url'].'</td>';
-                        echo '<td>'.$val['width'].'</td>';
-                        echo '<td>'.$val['height'].'</td>';
-                        echo '<td><button data-id="add_fav" class="btn-success button fav">Add Fav</button></td>';
+                        echo '<td>'.$val['user_id'].'</td>';
+                        echo '<td>'.$val['image_id'].'</td>';
+                        echo '<td>'.$val['created_at'].'</td>';
+                        echo '<td><button data-id="add_fav" class="btn-success button fav">Add Fav</button>&nbsp<button data-id="remove_fav" class="btn-danger button rem">Remove Fav</button></td>';
                         echo '</tr>';
                         $count++;
                     }

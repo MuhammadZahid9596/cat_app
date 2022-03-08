@@ -27,70 +27,37 @@ $result = json_decode($server_output,true);
                     <option value="med">medium</option>
                 </select>
                 <input type="text" class="form-control" name="search_id" id="search_id" placeholder="Search From ID" >
-                <button id="add_fav" class="btn-success button">Add Fav</button>
-                <button id="remove_fav" class="btn-danger button">Remove Fav</button>
+                <button id="fav_list" class="btn-success button">Favourite List</button>
             </div>
         </div>
         <table class="table table-bordered">
             <thead>
             <tr>
+                <th>Sno</th>
                 <th>Id</th>
                 <th>URL</th>
                 <th>Width</th>
                 <th>Height</th>
+                <th>Actions (Delete Fav from fav list)</th>
             </tr>
             </thead>
             <tbody>
                 <?php
+                    $count = 1;
                     foreach($result as $val){
                         echo '<tr>';
+                        echo '<td>'.$count.'</td>';
                         echo '<td>'.$val['id'].'</td>';
                         echo '<td>'.$val['url'].'</td>';
                         echo '<td>'.$val['width'].'</td>';
                         echo '<td>'.$val['height'].'</td>';
+                        echo '<td><button data-id="add_fav" class="btn-success button fav">Add Fav</button></td>';
                         echo '</tr>';
+                        $count++;
                     }
                 ?>
             </tbody>
         </table>
-        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add to favourite</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" id="fav_image" placeholder="Enter favourite image id">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="save_fav" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-                </div>
-            </div>
-        </div>
-        <div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Remove From Favourite</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" id="rem_image" placeholder="Enter favourite image id">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="rem_fav" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-                </div>
-            </div>
-        </div>
     </div>
 </body>
 </html>

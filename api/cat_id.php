@@ -4,7 +4,7 @@ include '../config/conn.php';
 
 $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL,"https://api.thecatapi.com/v1/images/?image_id=".$_POST['id']);
+curl_setopt($ch, CURLOPT_URL,"https://api.thecatapi.com/v1/images/".$_POST['id']);
 // Receive server response ...
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -15,7 +15,6 @@ $server_output = curl_exec($ch);
 curl_close ($ch);
 
 $result = json_decode($server_output,true);
-
 ?>
 <body>
     <div class="container">
@@ -31,8 +30,7 @@ $result = json_decode($server_output,true);
                     <option <?php echo $selected_med ;?> value="med">medium</option>
                 </select>
                 <input type="text" class="form-control" name="search_id" id="search_id" placeholder="Search From ID" >
-                <button id="add_fav" class="btn-success button">Add Fav</button>
-                <button id="remove_fav" class="btn-danger button">Remove Fav</button>
+                <button id="fav_list" class="btn-success button">Favourite List</button>
             </div>
         </div>
         <table class="table table-bordered">
@@ -43,21 +41,21 @@ $result = json_decode($server_output,true);
                 <th>URL</th>
                 <th>Width</th>
                 <th>Height</th>
+                <th>Actions (Delete Fav from fav list)</th>
             </tr>
             </thead>
             <tbody>
                 <?php
                     $count = 1;
-                    foreach($result as $val){
-                        echo '<tr>';
-                        echo '<td>'.$count.'</td>';
-                        echo '<td>'.$val['id'].'</td>';
-                        echo '<td>'.$val['url'].'</td>';
-                        echo '<td>'.$val['width'].'</td>';
-                        echo '<td>'.$val['height'].'</td>';
-                        echo '</tr>';
-                        $count++;
-                    }
+                    echo '<tr>';
+                    echo '<td>'.$count.'</td>';
+                    echo '<td>'.$result['id'].'</td>';
+                    echo '<td>'.$result['url'].'</td>';
+                    echo '<td>'.$result['width'].'</td>';
+                    echo '<td>'.$result['height'].'</td>';
+                    echo '<td><button data-id="add_fav" class="btn-success button fav">Add Fav</button></td>';
+                    echo '</tr>';
+                    
                 ?>
             </tbody>
         </table>

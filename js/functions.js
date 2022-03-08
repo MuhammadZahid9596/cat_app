@@ -28,50 +28,51 @@ $(document).ready(function(){
             }
         });
     });
-    $('#add_fav').on('click',function(){
-        $('#myModal').modal('show');
+    $('.fav').on('click',function(){
+        // $('#myModal').modal('show');
+        id = $(this).parents('tr').find("td:eq(1)").text();
+        $.ajax({
+            url: "api/save_fav.php",
+            type: "post",
+            data : {id : id, size:$('#select_size').val()},
+            cache: false,
+            success: function(html){
+                // $('.content').html(html);
+                alert(html+"Image added to favourites Successfully");
+            },
+            error:function(xhr){
+                console.log(xhr);
+            }
+        });
     });
-    $('#remove_fav').on('click',function(){
-        $('#myModal2').modal('show');
+    $('.rem').on('click',function(){
+        id = $(this).parents('tr').find("td:eq(1)").text();
+        $.ajax({
+            url: "api/remove_fav.php",
+            type: "post",
+            data : {id : id, size:$('#select_size').val()},
+            cache: false,
+            success: function(html){
+                alert(html+"Image removed from favourites Successfully");
+                location.reload();
+            },
+            error:function(xhr){
+                console.log(xhr);
+            }
+        });
     });
-    $('#save_fav').on('click',function(){
-        if($("#fav_image").val()){
-            $.ajax({
-                url: "api/save_fav.php",
-                type: "post",
-                data : {id : $("#fav_image").val(), size:$('#select_size').val()},
-                cache: false,
-                success: function(html){
+    $('#fav_list').on('click',function(){
+        $.ajax({
+            url: "api/fav_list.php",
+            type: "post",
+            data : {size:$('#select_size').val()},
+            cache: false,
+            success: function(html){
                 $('.content').html(html);
-                alert("Image added to favourites Successfully");
-                },
-                error:function(xhr){
-                    console.log(xhr);
-                }
-            });
-        }
-        else{
-            alert('kindly enter an image id');
-        }  
-    });
-    $('#rem_fav').on('click',function(){
-        if($("#rem_image").val()){
-            $.ajax({
-                url: "api/save_fav.php",
-                type: "post",
-                data : {id : $("#rem_image").val(), size:$('#select_size').val()},
-                cache: false,
-                success: function(html){
-                    alert("Image removed from favourites Successfully");
-                    location.reload();
-                },
-                error:function(xhr){
-                    console.log(xhr);
-                }
-            });
-        }
-        else{
-            alert('kindly enter an image id');
-        }  
+            },
+            error:function(xhr){
+                console.log(xhr);
+            }
+        });
     });
 });
